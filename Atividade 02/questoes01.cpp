@@ -26,8 +26,8 @@ class Pilha{
             this->topo = new Item<P>(i);
             tamanho = 1;
         }
-        void empilhar(P n){
-            this->topo=new Item<P>(n,this->topo);
+        void empilhar(P z){
+            this->topo=new Item<P>(z,this->topo);
             tamanho++;
         }
         bool pilhaVazia(){
@@ -100,29 +100,28 @@ class Arvore{
         void iterativoERD(){
             Pilha<No<A>*> *pilha = new Pilha<No<A>*>(this->raiz);
             No<A> *n;
-            while (!pilha->pilhaVazia()){
-                n = pilha->desempilhar();
-                if(n->esq!=0){
-                    pilha->empilhar(n);
-                    pilha->empilhar(n->esq);
-                }else{
-                    //imprimindo esq
-                    cout<<n->getValor()<<" ";
-                    //imprimindo centro/raiz
+            No<A> *g;
+            if(this->raiz!=0){
+                while (true){
                     n = pilha->desempilhar();
-                    cout<<n->getValor()<<" ";
-                    //adicionando a dir. a árvore
-                    if(n->dir!=0){
-                        n = n->dir;
+                    if( n->esq!=0){
                         pilha->empilhar(n);
-                        /*
-                            cout<<n->getValor()<<" ";
-                        */
+                        pilha->empilhar(n->esq);           
+                    }else{
+                        if(pilha->pilhaVazia()) break;
+                        cout<<n->getValor()<<" ";                     
+                        if(n->dir!=0){
+                            pilha->empilhar(n->dir);
+                        }
+                        n = pilha->desempilhar();
+                        cout<<n->getValor()<<" ";
+                        
                     }
                 }
             }
             delete pilha;
             delete n;
+            delete g;
         }
 
         //recursivo erd
@@ -156,7 +155,8 @@ int main(){
     No<char> *n1 = new No<char>('c');
     No<char> *n2 = new No<char>('f');
     No<char> *n3 = new No<char>('d',n1,n2);
-    No<char> *n4 = new No<char>('a');
+    No<char> *n0 = new No<char>('k');
+    No<char> *n4 = new No<char>('a',NULL,n0);
     No<char> *n5 = new No<char>('b', n4, n3);
     Arvore<char> *a1 = new Arvore<char>(n5);
     a1->iniciarRecursivoErd();
@@ -164,6 +164,7 @@ int main(){
     delete n1;   
     delete n2;   
     delete n3;   
+    delete n0;   
     delete n4;   
     delete n5;   
     delete a1;   
