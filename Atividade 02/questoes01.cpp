@@ -26,6 +26,13 @@ class Pilha{
             this->topo = new Item<P>(i);
             tamanho = 1;
         }
+        
+        Pilha(){
+            this->topo = 0;
+            tamanho = 0;
+        }
+
+
         void empilhar(P z){
             this->topo=new Item<P>(z,this->topo);
             tamanho++;
@@ -78,18 +85,8 @@ class Arvore{
             this->raiz = 0;
         }
 
-        /*
-        void pilha(){
-            Pilha<A> *pilha1 = new Pilha<A>(10);
-            pilha1->empilhar(15);
-            cout<<pilha1->desempilhar()<<"\n";
-            cout<<pilha1->desempilhar()<<"\n";
-            delete pilha1; 
-        }
-        */
-        
-        //recursivo erd
-        void iniciarIterativoErd(){
+        //iterativo ERD
+        void iniciarIterativoERD(){
             cout<<"Iterativo ERD:";
             iterativoERD();
             cout<<"\n";
@@ -98,34 +95,96 @@ class Arvore{
 
 
         void iterativoERD(){
-            Pilha<No<A>*> *pilha = new Pilha<No<A>*>(this->raiz);
-            No<A> *n;
-            No<A> *g;
-            if(this->raiz!=0){
-                while (true){
-                    n = pilha->desempilhar();
-                    if( n->esq!=0){
-                        pilha->empilhar(n);
-                        pilha->empilhar(n->esq);           
-                    }else{
-                        if(pilha->pilhaVazia()) break;
-                        cout<<n->getValor()<<" ";                     
-                        if(n->dir!=0){
-                            pilha->empilhar(n->dir);
-                        }
-                        n = pilha->desempilhar();
-                        cout<<n->getValor()<<" ";
-                        
-                    }
+            Pilha<No<A>*> *pilha = new Pilha<No<A>*>();
+            No<A> *n = this->raiz;
+            
+            while(n!=0){
+                while (n!=0){
+                    if(n->dir!=0) pilha->empilhar(n->dir); // guarda a direita 
+                    pilha -> empilhar(n); // empilha o centro
+                    n = n->esq;
                 }
+                n = pilha->desempilhar();
+                while(!pilha->pilhaVazia() && n->dir==0){
+                    cout<<n->getValor()<<" ";
+                    n = pilha->desempilhar();
+                }
+                cout<<n->getValor()<<" ";
+                if (!pilha->pilhaVazia()){
+                    n = pilha->desempilhar();
+                }else{
+                    n = 0;
+                }
+
+            }
+            delete pilha;
+            delete n;
+        }
+
+
+        //iterativo EDR
+        void iniciarIterativoEDR(){
+            cout<<"Iterativo EDR:";
+            iterativoEDR();
+            cout<<"\n";
+        }
+
+
+
+        void iterativoEDR(){
+            Pilha<No<A>*> *pilha = new Pilha<No<A>*>();
+            No<A> *n = this->raiz, *g = this->raiz;
+        
+            while(n!=0){
+                for (;n->esq!=0;n = n->esq){
+                    pilha->empilhar(n);
+                }
+                while(n->dir == 0 || n->dir == g ){
+                    cout<<n->getValor()<<" ";
+                    g = n;
+                    if(pilha->pilhaVazia()) return;
+                    n = pilha->desempilhar(); 
+                }
+
+                pilha->empilhar(n);
+                n = n->dir;
             }
             delete pilha;
             delete n;
             delete g;
         }
 
+
+        //iterativo RED
+        void iniciarIterativoRED(){
+            cout<<"Iterativo RED:";
+            iterativoRED();
+            cout<<"\n";
+        }
+
+
+
+        void iterativoRED(){
+            Pilha<No<A>*> *pilha = new Pilha<No<A>*>();
+            No<A> *n = this->raiz;
+            
+            if(n!=0){
+                pilha->empilhar(n);
+                while(!pilha->pilhaVazia()){
+                    n = pilha->desempilhar();
+                    cout<<n->getValor()<<" ";
+                    if (n->dir!=0) pilha->empilhar(n->dir);
+                    if (n->esq!=0) pilha->empilhar(n->esq);
+                }
+            }
+            delete pilha;
+            delete n;
+        }
+
+
+
         //recursivo erd
-        void iniciarRecursivoErd(){
+        void iniciarRecursivoERD(){
             cout<<"Recursivo ERD:";
             recursivoERD(this->raiz);
             cout<<"\n";
@@ -145,13 +204,58 @@ class Arvore{
                 }
             }
         }
+
+        //recursivo RED
+        void iniciarRecursivoRED(){
+            cout<<"Recursivo RED:";
+            recursivoRED(this->raiz);
+            cout<<"\n";
+        }
+
+
+        void recursivoRED(No<A> *n){
+            if(this->raiz==0){
+            cout<<"Vazio\n";
+            }else{
+                if(n!=0){
+                cout<<"<";
+                cout<<n->getValor();
+                recursivoRED(n->esq);
+                recursivoRED(n->dir);
+                cout<<">";
+                }
+            }
+        }
+        
+        //recursivo EDR
+        void iniciarRecursivoEDR(){
+            cout<<"Recursivo EDR:";
+            recursivoEDR(this->raiz);
+            cout<<"\n";
+        }
+
+
+        void recursivoEDR(No<A> *n){
+            if(this->raiz==0){
+            cout<<"Vazio\n";
+            }else{
+                if(n!=0){
+                cout<<"<";
+                recursivoEDR(n->esq);
+                recursivoEDR(n->dir);
+                cout<<n->getValor();
+                cout<<">";
+                }
+            }
+        }
+                
 };
 
 
 
 
 int main(){
-    cout<<"teste\n";
+    cout<<" Questão 01\n";
     No<char> *n1 = new No<char>('c');
     No<char> *n2 = new No<char>('f');
     No<char> *n3 = new No<char>('d',n1,n2);
@@ -159,8 +263,12 @@ int main(){
     No<char> *n4 = new No<char>('a',NULL,n0);
     No<char> *n5 = new No<char>('b', n4, n3);
     Arvore<char> *a1 = new Arvore<char>(n5);
-    a1->iniciarRecursivoErd();
-    a1->iniciarIterativoErd();
+    a1->iniciarRecursivoEDR();
+    a1->iniciarIterativoEDR();
+    a1->iniciarRecursivoRED();
+    a1->iniciarIterativoRED();
+    a1->iniciarRecursivoERD();
+    a1->iniciarIterativoERD();
     delete n1;   
     delete n2;   
     delete n3;   
