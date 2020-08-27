@@ -167,7 +167,7 @@ class Arvore{
         void iterativoRED(){
             Pilha<No<A>*> *pilha = new Pilha<No<A>*>();
             No<A> *n = this->raiz;
-            int d = 0;
+            //int d = 0;
             if(n != 0){
                 pilha->empilhar(n);
                
@@ -176,8 +176,8 @@ class Arvore{
                     cout<<n->getValor()<<" ";
                     if (n->dir!=0) pilha->empilhar(n->dir);
                     if (n->esq!=0) pilha->empilhar(n->esq);
-                    if (d++==1000) cout<<"exit";
-                    if (d++==1000) break;
+                    //if (d==900) cout<<"exit";
+                    //if (d++==1000) break;
                 }
             }
             delete pilha;
