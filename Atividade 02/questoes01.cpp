@@ -1,6 +1,15 @@
 #include <iostream>
-
+#include <sys/time.h>
 using namespace std;
+
+//(fim*x+ms) - (inicio*x+ms) = tempo
+#define GET_MS(ini, fim)  ((fim.tv_sec * 1000000 + fim.tv_usec) \
+			- (ini.tv_sec * 1000000 + ini.tv_usec))
+
+struct timeval inicio, fim;
+
+
+
 //pilha
 template<typename I>
 class Item{
@@ -88,8 +97,16 @@ class Arvore{
         //iterativo ERD
         void iniciarIterativoERD(){
             cout<<"Iterativo ERD:";
+
+            
+            gettimeofday(&inicio, NULL);
+            
             iterativoERD();
-            cout<<"\n";
+
+            gettimeofday(&fim, NULL);
+            cout <<"\ntime: "<< GET_MS(inicio,fim) << " milisegundos." ;
+
+            cout<<" \n";
         }
 
 
@@ -125,7 +142,14 @@ class Arvore{
         //iterativo EDR
         void iniciarIterativoEDR(){
             cout<<"Iterativo EDR:";
+            
+            gettimeofday(&inicio, NULL);
+            
             iterativoEDR();
+
+            gettimeofday(&fim, NULL);
+            cout <<"\ntime: "<< GET_MS(inicio,fim) << " milisegundos." ;
+
             cout<<"\n";
         }
 
@@ -158,7 +182,13 @@ class Arvore{
         //iterativo RED
         void iniciarIterativoRED(){
             cout<<"Iterativo RED:";
+            gettimeofday(&inicio, NULL);
+            
             iterativoRED();
+            
+            gettimeofday(&fim, NULL);
+            cout <<"\ntime: "<< GET_MS(inicio,fim) << " milisegundos." ;
+
             cout<<"\n";
         }
 
@@ -189,7 +219,14 @@ class Arvore{
         //recursivo erd
         void iniciarRecursivoERD(){
             cout<<"Recursivo ERD:";
+            
+            gettimeofday(&inicio, NULL);
+            
             recursivoERD(this->raiz);
+
+            gettimeofday(&fim, NULL);
+            cout <<"\ntime: "<< GET_MS(inicio,fim) << " milisegundos." ;
+
             cout<<"\n";
         }
 
@@ -213,7 +250,14 @@ class Arvore{
         //recursivo RED
         void iniciarRecursivoRED(){
             cout<<"Recursivo RED:";
+            
+            gettimeofday(&inicio, NULL);
+
             recursivoRED(this->raiz);
+
+            gettimeofday(&fim, NULL);
+            cout <<"\ntime: "<< GET_MS(inicio,fim) << " milisegundos." ;
+            
             cout<<"\n";
         }
 
@@ -235,7 +279,14 @@ class Arvore{
         //recursivo EDR
         void iniciarRecursivoEDR(){
             cout<<"Recursivo EDR:";
+            
+            gettimeofday(&inicio, NULL);
+
             recursivoEDR(this->raiz);
+
+            gettimeofday(&fim, NULL);
+            cout <<"\ntime: "<< GET_MS(inicio,fim) << " milisegundos." ;
+            
             cout<<"\n";
         }
 
