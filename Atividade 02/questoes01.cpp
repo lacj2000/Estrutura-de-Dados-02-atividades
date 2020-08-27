@@ -97,7 +97,7 @@ class Arvore{
         void iterativoERD(){
             Pilha<No<A>*> *pilha = new Pilha<No<A>*>();
             No<A> *n = this->raiz;
-            
+
             while(n!=0){
                 while (n!=0){
                     if(n->dir!=0) pilha->empilhar(n->dir); // guarda a direita 
@@ -167,14 +167,17 @@ class Arvore{
         void iterativoRED(){
             Pilha<No<A>*> *pilha = new Pilha<No<A>*>();
             No<A> *n = this->raiz;
-            
-            if(n!=0){
+            int d = 0;
+            if(n != 0){
                 pilha->empilhar(n);
+               
                 while(!pilha->pilhaVazia()){
                     n = pilha->desempilhar();
                     cout<<n->getValor()<<" ";
                     if (n->dir!=0) pilha->empilhar(n->dir);
                     if (n->esq!=0) pilha->empilhar(n->esq);
+                    if (d++==1000) cout<<"exit";
+                    if (d++==1000) break;
                 }
             }
             delete pilha;
@@ -191,9 +194,10 @@ class Arvore{
         }
 
 
+           
         void recursivoERD(No<A> *n){
             if(this->raiz==0){
-            cout<<"Vazio\n";
+                cout<<"Vazio\n";
             }else{
                 if(n!=0){
                 cout<<"<";
@@ -204,6 +208,7 @@ class Arvore{
                 }
             }
         }
+
 
         //recursivo RED
         void iniciarRecursivoRED(){
@@ -263,12 +268,16 @@ int main(){
     No<char> *n4 = new No<char>('a',NULL,n0);
     No<char> *n5 = new No<char>('b', n4, n3);
     Arvore<char> *a1 = new Arvore<char>(n5);
+    /*
+    */
+    a1->iniciarRecursivoERD();
+    a1->iniciarIterativoERD();
     a1->iniciarRecursivoEDR();
     a1->iniciarIterativoEDR();
     a1->iniciarRecursivoRED();
     a1->iniciarIterativoRED();
-    a1->iniciarRecursivoERD();
-    a1->iniciarIterativoERD();
+    /*
+    */
     delete n1;   
     delete n2;   
     delete n3;   
