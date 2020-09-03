@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stack>
+#include <time.h>
 
 
 using namespace std;
@@ -40,10 +41,14 @@ class Tree{
     }
 
     void startRPO(){
-        cout<<"Recursivo pre-order: ";
+        cout<<"Recursivo pre-order: ";    
+        long long int t;
+        t = clock();
+        cout<<"\n"<<"time : "<<t;
         recursivePreOrder(this->root);
-        
-        cout<<" \n";
+        cout<<"\n"<<"time : "<<clock();
+        t = clock()- t;
+        cout<<"\n"<<"time : "<<((float)t)/CLOCKS_PER_SEC<<"\n";
 
     }
 
@@ -52,11 +57,9 @@ class Tree{
            cout<<"vazio";
         }else{
             if(n!=0){
-            cout<<"<";
-            cout<<n->getValue();
+            cout<<n->getValue()<<" ";
             recursivePreOrder(n->left);
             recursivePreOrder(n->right);
-            cout<<">";
             }
         }
     }
@@ -64,18 +67,20 @@ class Tree{
 
     void startIPO(){
         cout<<"Iterativo pre-order: ";
-        iterativePreOrder(this->root);
-        cout<<" \n";
+        iterativePreOrder();
+        cout<<"\n"<<"time: "<<""<<"\n";
+
     }
 
 
-    void iterativePreOrder(Node<T> *r){
+    void iterativePreOrder(){
         stack<Node<T>*> pilha ;
-        Node<T> *n = r;
+        Node<T> *n = this->root;
         if(n != 0){
             pilha.push(n); 
             while(!pilha.empty()){
-                n = pilha.pop();
+                n = pilha.top();
+                pilha.pop();
                 cout<<n->getValue()<<" ";
                 if (n->right!=0) pilha.push(n->right);
                 if (n->left!=0) pilha.push(n->left);
@@ -90,6 +95,8 @@ class Tree{
 
 
 int main(){
+    clock_t t;
+
     Node<char> *n1 = new Node<char>('f');
     Node<char> *n2 = new Node<char>('e');
     Node<char> *n3 = new Node<char>('d');
@@ -97,8 +104,11 @@ int main(){
     Node<char> *n5 = new Node<char>('b', NULL, n3);
     Node<char> *n6 = new Node<char>('a', n5, n4);
     Tree<char> *t1 = new Tree<char>(n6);
+
     t1->startRPO();
+  
     t1->startIPO();
+    
 
     delete n1;
     delete n2;
