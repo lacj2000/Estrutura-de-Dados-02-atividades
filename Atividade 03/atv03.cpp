@@ -42,13 +42,10 @@ class Tree{
 
     void startRPO(){
         cout<<"Recursivo pre-order: ";    
-        clock_t t;
-        t = clock();
-        cout<<"\n"<<"time : "<<t;
+        clock_t t = clock();
         recursivePreOrder(this->root);
-        cout<<"\n"<<"time : "<<clock();
         t = clock()- t;
-        cout<<"\n"<<"time : "<<((float)t)/CLOCKS_PER_SEC<<"\n";
+        cout<<"\n"<<"time : "<<t<<" milisegundos\n";
 
     }
 
@@ -67,8 +64,10 @@ class Tree{
 
     void startIPO(){
         cout<<"Iterativo pre-order: ";
+        clock_t t = clock();
         iterativePreOrder();
-        cout<<"\n"<<"time: "<<""<<"\n";
+        t = clock()- t;
+        cout<<"\n"<<"time : "<<t<<" milisegundos\n";
 
     }
 
