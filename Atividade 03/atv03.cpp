@@ -42,7 +42,7 @@ class Tree{
 
     void startRPO(){
         cout<<"Recursivo pre-order: ";    
-        long long int t;
+        clock_t t;
         t = clock();
         cout<<"\n"<<"time : "<<t;
         recursivePreOrder(this->root);
