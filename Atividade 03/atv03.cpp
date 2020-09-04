@@ -90,31 +90,108 @@ class Tree{
         delete n;
     }
 
+
+    void insertI(T n){
+        Node<T> *p = this->root, *prev=0;
+        while(p!=0){
+            prev = p;
+            if (n < p->getValue())
+                p = prev->left;
+            else
+                p = prev->right;
+        }
+        if (root==0){
+            this->root = new Node<T>(n);
+        }else{
+            if(n < prev->getValue()){
+                prev->left = new Node<T>(n);
+            }else{
+                prev->right = new Node<T>(n);
+            }
+        }
+
+    }
+
+
+    void recursiveInsertion(T n, Node<T> *p, Node<T> *prev){
+        //inserção
+        if(p==0){
+           if(n < prev->getValue()){
+                prev->left = new Node<T>(n);
+            }else{
+                prev->right = new Node<T>(n);
+            } 
+        }    
+        //recusão
+        else{
+             if(n < p->getValue()){
+                recursiveInsertion(n, p->left, p);
+            }else{
+                recursiveInsertion(n, p->right, p);
+            }
+        }
+    }
+
+    
+    void insertR(T n){
+        if (this->root == 0){
+            this->root = new Node<T>(n);
+        }else{
+            if(n < root->getValue()){
+                recursiveInsertion(n, this->root->left, this->root);
+            }else{
+                recursiveInsertion(n, this->root->right, this->root);
+            }
+        }
+    }
+
 };
 
 
 int main(){
     clock_t t;
-
-    Node<char> *n1 = new Node<char>('f');
-    Node<char> *n2 = new Node<char>('e');
-    Node<char> *n3 = new Node<char>('d');
-    Node<char> *n4 = new Node<char>('c', n2, n1);
-    Node<char> *n5 = new Node<char>('b', NULL, n3);
-    Node<char> *n6 = new Node<char>('a', n5, n4);
-    Tree<char> *t1 = new Tree<char>(n6);
+    Tree<int> *t1 = new Tree<int>();
+    //inserts
+    t1->insertI(14);
+    t1->insertI(15);
+    t1->insertI(16);
+    t1->insertI(17);
+    t1->insertI(18);
+    t1->insertI(19);
+    t1->insertI(20);
+    t1->insertI(21);
+    t1->insertI(22);
+    t1->insertI(23);
+    t1->insertI(24);
+    t1->insertI(25);
+    t1->insertI(26);
+    t1->insertI(27);
+    t1->insertI(28);
+    t1->insertI(29);
+    t1->insertI(30);
+    t1->insertI(1);
+    t1->insertI(2);
+    t1->insertI(3);
+    t1->insertI(4);
+    t1->insertI(5);
+    t1->insertI(6);
+    t1->insertI(7);
+    t1->insertI(8);
+    t1->insertI(9);
+    t1->insertI(10);
+    t1->insertI(11);
+    t1->insertI(12);
+    t1->insertI(13);
+    
+    
+    
 
     t1->startRPO();
   
     t1->startIPO();
     
 
-    delete n1;
-    delete n2;
-    delete n3;
-    delete n4;
-    delete n5;
-    delete n6;
+    
     delete t1;
     return 0;
 
