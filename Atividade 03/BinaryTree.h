@@ -15,15 +15,7 @@ class Node {
         this->left = l;
         this->right = r;
     }
-    void setLeft(Node<N> *l){
-        this->left = l;
-    }
-    void setRight(Node<N> *r){
-        this->right = r;
-    }
-    N getValue(){
-        return this->value; 
-    }
+    
 };
  
 
@@ -53,7 +45,7 @@ class BinaryTree{
            cout<<"vazio";
         }else{
             if(n!=0){
-            cout<<n->getValue()<<" ";
+            cout<<n->value<<" ";
             recursivePreOrder(n->left);
             recursivePreOrder(n->right);
             }
@@ -79,7 +71,7 @@ class BinaryTree{
             while(!pilha.empty()){
                 n = pilha.top();
                 pilha.pop();
-                cout<<n->getValue()<<" ";
+                cout<<n->value<<" ";
                 if (n->right!=0) pilha.push(n->right);
                 if (n->left!=0) pilha.push(n->left);
             }
@@ -94,7 +86,7 @@ class BinaryTree{
         Node<T> *p = this->root, *prev=0;
         while(p!=0){
             prev = p;
-            if (n < p->getValue())
+            if (n < p->value)
                 p = prev->left;
             else
                 p = prev->right;
@@ -102,7 +94,7 @@ class BinaryTree{
         if (root==0){
             this->root = new Node<T>(n);
         }else{
-            if(n < prev->getValue()){
+            if(n < prev->value){
                 prev->left = new Node<T>(n);
             }else{
                 prev->right = new Node<T>(n);
@@ -115,7 +107,7 @@ class BinaryTree{
     void recursiveInsertion(T n, Node<T> *p, Node<T> *prev){
         //inserção
         if(p==0){
-           if(n < prev->getValue()){
+           if(n < prev->value){
                 prev->left = new Node<T>(n);
             }else{
                 prev->right = new Node<T>(n);
@@ -123,7 +115,7 @@ class BinaryTree{
         }    
         //recusão
         else{
-             if(n < p->getValue()){
+             if(n < p->value){
                 recursiveInsertion(n, p->left, p);
             }else{
                 recursiveInsertion(n, p->right, p);
@@ -136,7 +128,7 @@ class BinaryTree{
         if (this->root == 0){
             this->root = new Node<T>(n);
         }else{
-            if(n < root->getValue()){
+            if(n < root->value){
                 recursiveInsertion(n, this->root->left, this->root);
             }else{
                 recursiveInsertion(n, this->root->right, this->root);
