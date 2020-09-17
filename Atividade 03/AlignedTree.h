@@ -48,12 +48,10 @@ class AlignedTree{
                 prev->right = new NodeAligned<T>(element,NULL,prev->right,1);
             }else prev->right = new NodeAligned<T>(element);
         }
-        //delete p;
-        //delete prev;
     }
 
     void preOrder(){
-        cout<<"AlignedTree pre-order: ";    
+        cout<<"Árvore-Alinhada pre-order: ";    
         clock_t t = clock();
         //processamento
         stack<NodeAligned<T>*> auxStack ;
