@@ -16,9 +16,12 @@ int main(){
     bt->startIPO();
 
     AlignedTree<int> *at = new AlignedTree<int>();
+    
     at->insert(10);
-    at->insert(15);
     at->insert(7);
+    at->insert(15);
+    at->insert(9);
+    at->insert(8);
     at->insert(11);
     at->insert(1);
     

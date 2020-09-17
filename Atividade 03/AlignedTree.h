@@ -31,22 +31,23 @@ class AlignedTree{
     void insert(T element){
         if(this->isEmpty())
             this->root = new NodeAligned<T>(element);         
-        NodeAligned<T> *p = this->root, *prev = 0; 
-        while(p!=0){
-            prev = p;
-            if(p->value > element) 
-                p = p->left;
-            else if (p->successor == 0)
-                p = p->right;
-            else break;
+        else{
+            NodeAligned<T> *p = this->root, *prev = 0; 
+            while(p!=0){
+                prev = p;
+                if(p->value > element) 
+                    p = p->left;
+                else if (p->successor == 0)
+                    p = p->right;
+                else break;
+            }
+            if(prev->value > element){
+                prev->left = new NodeAligned<T>(element,NULL,prev, 1);
+            }else if(prev->successor==1){
+                prev->successor = 0;
+                prev->right = new NodeAligned<T>(element,NULL,prev->right,1);
+            }else prev->right = new NodeAligned<T>(element);
         }
-        if(prev->value > element){
-            prev->left = new NodeAligned<T>(element,NULL,prev, 1);
-        }else if(prev->successor==1){
-            prev->successor = 0;
-            prev->right = new NodeAligned<T>(element,NULL,prev->right,1);
-        }else prev->right = new NodeAligned<T>(element);
-      
         //delete p;
         //delete prev;
     }
@@ -55,11 +56,20 @@ class AlignedTree{
         cout<<"AlignedTree pre-order: ";    
         clock_t t = clock();
         //processamento
-        
-        NodeAligned<T> *p = this->root; 
-        while (p != 0) {    
-        }
-        
+        stack<NodeAligned<T>*> auxStack ;
+        NodeAligned<T> *p = this->root;
+        while(p!=0){
+            this->visit(p);
+            if (p->successor==0){
+                auxStack.push(p);
+            }
+            if (p->left!=0){
+                p = p->left;
+            }else if (p->successor == 1){
+                p = auxStack.top()->right;
+                auxStack.pop();
+            }else break;
+        }        
         t = clock()- t;
         cout<<"\n"<<"time : "<<t<<" milisegundos\n";
     }
