@@ -51,7 +51,7 @@ class AlignedTree{
     }
 
     void preOrder(){
-        cout<<"Árvore-Alinhada pre-order: ";    
+        cout<<"Árvore-Alinhada pre-order(pilha): ";    
         clock_t t = clock();
         //processamento
         stack<NodeAligned<T>*> auxStack ;
@@ -72,28 +72,27 @@ class AlignedTree{
         cout<<"\n"<<"time : "<<t<<" milisegundos\n";
     }
 
-    void preOrder(){
-        cout<<"Árvore-Alinhada pre-order 2: ";    
+    void preOrder2(){
+        cout<<"Árvore-Alinhada pre-order(fila-while): ";    
         clock_t t = clock();
         //processamento
-        stack<NodeAligned<T>*> auxStack ;
-        NodeAligned<T> *p = this->root;
+        //stack<NodeAligned<T>*> auxStack ;
+        NodeAligned<T> *p = this->root, *prev = 0;
         while(p!=0){
-            this->visit(p);
-            if (p->successor==0){
-                auxStack.push(p);
-            }
-            if (p->left!=0){
+            while(p!=0){
+                this->visit(p);
+                prev = p;
                 p = p->left;
-            }else if (p->successor == 1){
-                p = auxStack.top()->right;
-                auxStack.pop();
-            }else break;
+            }
+            p = prev;
+            while(p->successor == 1){
+                p = p->right;                
+            }
+            p = p->right;                
         }        
         t = clock()- t;
         cout<<"\n"<<"time : "<<t<<" milisegundos\n";
     }
-
 
 
     void visit(NodeAligned<T> *n){
