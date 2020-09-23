@@ -46,9 +46,9 @@ class BinaryTree{
            cout<<"vazio";
         }else{
             if(n!=0){
-            cout<<n->value<<" ";
-            recursivePreOrder(n->left);
-            recursivePreOrder(n->right);
+                visit(n);
+                recursivePreOrder(n->left);
+                recursivePreOrder(n->right);
             }
         }
     }
@@ -140,8 +140,66 @@ class BinaryTree{
     // exclusão
     void exclusion(T ex){
         cout<<"excluindo "<<ex<<": ";
-        //processamento
         clock_t k = clock();
+        //processamento
+        Node<T> *p = this->root, *prev = 0, *br = 0;
+        int lado;
+        while(p!=0){
+            if (p->value != ex) prev = p ;
+            if (ex < p->value){ 
+                p = p->left;
+                lado = 0;
+            }    
+            else if (ex > p->value){
+                p = p->right;
+                lado = 1;
+            }
+            else if(p==0) {
+                cout<<"Não existe!";
+                break;
+            }
+            else if (ex == p->value){
+                if (p->left!=0){
+                    br = p->right;
+                    if (lado==0){
+                        prev->left = p->left;
+                    }else if (lado==1){
+                        prev->right = p->left;
+                    } 
+                    if(p->right != 0){
+                        p = p->left;
+                        //inserir esquerda
+                        while (p!=0){
+                            if (p != 0) prev = p;
+                            if (ex < p->value){ 
+                                p = p->left;
+                                lado = 0;
+                            }else{
+                                p = p->right;
+                                lado = 1;
+                            }  
+                        }
+                        if (lado == 0 ) prev->left = br; 
+                        else prev->right = br;
+
+
+                    }
+                }else if(p->right!= 0){
+                    if (lado==0){
+                        prev->left = p->right;
+                    }else{
+                        prev->right = p->right;
+                    } 
+                }else{
+                    if (lado==0){
+                        prev->left = 0;
+                    }else{
+                        prev->right = 0;
+                    } 
+                }
+                break;
+            } 
+        }
         k = clock()- k;
         cout<<"\n"<<"time : "<<k<<" milisegundos\n";
     }

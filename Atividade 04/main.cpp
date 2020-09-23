@@ -12,6 +12,7 @@ int main(){
     bt->insertR(8);
     bt->insertR(11);
     bt->insertR(1);
+    bt->insertR(17);
     // pre order recursivo
     bt->startRPO();
     // pre order iterativo
@@ -26,11 +27,14 @@ int main(){
     at->insert(8);
     at->insert(11);
     at->insert(1);
+    at->insert(17);
+
     
     at->preOrder();
     at->preOrder2();
     
     bt->exclusion(7);
+    bt->startRPO();
 
     delete bt;
     delete at;
